@@ -1,6 +1,6 @@
 import unittest
 
-from day1 import calc_step, Facing, calc_seq_dist
+from day1 import calc_step, Facing, calc_seq_dist, calc_seq_crossing
 
 
 class ManhattanDistanceTest(unittest.TestCase):
@@ -54,3 +54,14 @@ class ManhattanDistanceTest(unittest.TestCase):
         INPUT = 'R5, L5, R5, R3'
         d = calc_seq_dist(INPUT)
         self.assertEqual(12, d)
+
+    def test_sequence_crosses_itself(self):
+        INPUT = 'R8, R4, R4, R8'
+        x, y = calc_seq_crossing(INPUT)
+        self.assertEqual(4, x)
+        self.assertEqual(0, y)
+
+
+
+
+
