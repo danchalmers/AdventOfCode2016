@@ -60,8 +60,3 @@ class ManhattanDistanceTest(unittest.TestCase):
         x, y = calc_seq_crossing(INPUT)
         self.assertEqual(4, x)
         self.assertEqual(0, y)
-
-
-
-
-
