@@ -4,8 +4,16 @@ package aoc {
 
   /**
     * Created by danc on 23/12/2016.
+    * Learning Scala via the advent of code
+    * Problem spec at http://adventofcode.com/2016/day/1
     */
+
   object DayOne {
+    /**
+      * Convert input to a sequence of moves N/S/E/W + steps
+      * @param input  a sequence of comma separated L/R turn + steps pairs in a string
+      * @return a sequence of Moves
+      */
     def convertToDirections(input: String): Seq[Move] = {
       var heading = NORTH
 
@@ -19,20 +27,43 @@ package aoc {
       for (turnStep <- input.split(",")) yield turnConvert(turnStep.trim)
     }
 
-    def calcPosition(input: String): Position = {
-      var pos: Position = (0, 0)
-
-      val headingSteps = convertToDirections(input)
+    /**
+      * Calculate the final position from a sequence of moves, assuming starting at origin
+      * East and North are positive
+      * @param headingSteps  a sequence of Moves
+      * @return an East, North position
+      */
+    def calcPosition(headingSteps: Seq[Move]): Position = {
+      var pos: Position = ORIGIN
       for (move <- headingSteps) {
         pos = Direction.move(move, pos)
       }
       pos
     }
 
+    /**
+      * Calculate the final position from input string
+      * @param input  a sequence of comma separated L/R turn + steps pairs in a string
+      * @return East, North
+      */
+    def calcPosition(input: String): Position = {
+      calcPosition(convertToDirections(input))
+    }
+
+    /**
+      * Calculate the Manhattan distance from origin from input string
+      * @param input  a sequence of comma separated L/R turn + steps pairs in a string
+      * @return distance in blocks
+      */
     def calcDistance(input: String): Int = {
       calcDistance(calcPosition(input))
     }
 
+    /**
+      * Calculate the Manhattan distance from origin from a position
+      * @param position  A position on a city grid
+      * @return distance in blocks
+      */
     def calcDistance(position: Position): Int = {
       val (east, north) = position
       east.abs + north.abs
