@@ -5,7 +5,10 @@ import org.scalatest.{FlatSpec, Matchers}
 /**
   * Created by danc on 23/12/2016.
   */
+
 class DayOneSpec extends FlatSpec with Matchers {
+  // Part one
+
   val test1 = "R2, L3"
   val test2 = "R2, R2, R2"
   val test3 = "R5, L5, R5, R3"
@@ -26,10 +29,45 @@ class DayOneSpec extends FlatSpec with Matchers {
     DayOne.calcDistance(test3) should be (12)
   }
 
-  "The answer to Advent of Code day one" should "be the distance for testInput" in {
+  "The answer to Advent of Code day one part one" should "be the distance for testInput" in {
     val position = DayOne.calcPosition(testInput)
     val distance = DayOne.calcDistance(position)
-    println(f"Position $position is $distance steps away")
+    println(f"Part 1 position $position is $distance steps away")
     succeed
   }
+
+  // Part two
+  "The result of a series of turns and steps" should "be the first location visited twice" in {
+    val test4Moves = DayOne.convertToDirections("R8, R4, R4, R8")
+    DayOne.calcFirstPlaceVistedTwice(test4Moves) should be ((4, 0))
+  }
+
+  it should "handle origin being visited twice" in {
+    val testMoves = DayOne.convertToDirections("R4, L2, L4, L4")
+    DayOne.calcFirstPlaceVistedTwice(testMoves) should be ((0, 0))
+  }
+
+  it should "handle a corner being visited twice" in {
+    val testMoves = DayOne.convertToDirections("R4, L2, L4, L2, R4")
+    DayOne.calcFirstPlaceVistedTwice(testMoves) should be ((0, 0))
+  }
+
+  it should "handle a mid-point being visited twice" in {
+    val testMoves = DayOne.convertToDirections("R4, L2, L3, L4")
+    DayOne.calcFirstPlaceVistedTwice(testMoves) should be ((1, 0))
+  }
+
+  it should "handle a reversal as visiting twice" in {
+    val testMoves = DayOne.convertToDirections("R4, L1, L1, L1, R4")
+    DayOne.calcFirstPlaceVistedTwice(testMoves) should be ((3, 0))
+  }
+
+  "The answer to Advent of Code day one part two" should "be the distance for testInput" in {
+    val directions = DayOne.convertToDirections(testInput)
+    val position = DayOne.calcFirstPlaceVistedTwice(directions)
+    val distance = DayOne.calcDistance(position)
+    println(f"Part 2 position $position is $distance steps away")
+    succeed
+  }
+
 }

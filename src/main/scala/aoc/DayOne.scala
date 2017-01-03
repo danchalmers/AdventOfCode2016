@@ -69,6 +69,34 @@ package aoc {
       east.abs + north.abs
     }
 
+    def smallSteps(headingSteps: Seq[Move]): Seq[Position] = {
+      var startPos = ORIGIN
+      var smallSteps:Seq[Position] = Seq()
+      for (step <- headingSteps) {
+        for (smallStep <- moves(step, startPos)) {
+          smallSteps = smallSteps :+ smallStep
+          startPos = smallStep
+        }
+      }
+      smallSteps
+    }
+
+    def calcFirstPlaceVistedTwice(headingSteps: Seq[Move]): Position = {
+      var visited: Set[Position] = Set(ORIGIN)
+      val posSteps = smallSteps(headingSteps)
+
+      def makeMove(poss: Seq[Position]): Position = {
+        var pos = poss.head
+        if (!(visited contains pos)) {
+          visited = visited + pos
+          pos = makeMove(poss.tail)
+        }
+        pos
+      }
+
+      makeMove(posSteps)
+    }
+
   }
 
 }

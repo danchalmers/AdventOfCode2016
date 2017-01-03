@@ -37,4 +37,8 @@ class DirectionSpec extends FlatSpec with Matchers {
     Direction.move((WEST, 2): Move, pos1) should be ((-1, 1))
     Direction.move((EAST, 2): Move, pos2) should be ((1, -1))
   }
+
+  "From a position a move" should "give a sequence of positions moved to" in {
+    Direction.moves((NORTH, 2): Move) should be (Seq((0,1), (0,2)))
+  }
 }

@@ -24,8 +24,8 @@ package aoc {
       Direction((4 + dir.id - 1) % 4)
     }
 
-    def move(move: Move, position: Position = ORIGIN): Position = {
-      val (dir, steps) = move
+    def move(mv: Move, position: Position = ORIGIN): Position = {
+      val (dir, steps) = mv
       var (posE, posN) = position
       dir match {
         case EAST => posE = posE + steps
@@ -36,6 +36,16 @@ package aoc {
       (posE, posN)
     }
 
+    def moves(mv: Move, position: Position = ORIGIN): Seq[Position] = {
+      val (dir, steps) = mv
+      def moveStep(dir: Direction, step: Int, position: Position): Seq[Position] = step match {
+        case 0 => Seq()
+        case _ =>
+          val pos = move((dir, 1), position)
+          pos +: moveStep(dir, step - 1, pos)
+      }
+      moveStep(dir, steps, position)
+    }
   }
 
 }
